@@ -18,7 +18,7 @@ function findNextEnd(v, prev, vertices, ends, vertexCoords) {
         v = next;
     }
 
-    return { vertex: v, weight: weight, coordinates: coordinates };
+    return { vertex: v, weight: weight, coordinates: coordinates };;
 }
 
 function compactNode(k, vertices, ends, vertexCoords) {
@@ -29,6 +29,20 @@ function compactNode(k, vertices, ends, vertexCoords) {
         if (neighbor.vertex !== k && (!result.edges[neighbor.vertex] || result.edges[neighbor.vertex] > weight)) {
             result.edges[neighbor.vertex] = weight;
             result.coordinates[neighbor.vertex] = [vertexCoords[k]].concat(neighbor.coordinates);
+            
+        }
+        
+        if (Math.abs(parseInt(k.split(',')[0])) == 180) {
+
+          answer = k;
+          if (k[0] === "-") {            
+            answer = answer.substr(1);
+          } else {
+            answer = "-" + answer;
+          }
+          result.edges[answer] = 0.0;
+          var split = k.split(',');
+          result.coordinates[answer] = [[parseFloat(split[0]), parseFloat(split[1])]];
         }
         return result;
     }, {edges: {}, coordinates: {}});
